@@ -72,4 +72,31 @@ const tuple: [string, number] = ["1", 1];
 tuple.push("hello"); // ts가 이건 못 막음
 console.log("tuple: ", tuple);
 
+// - enum, keyof, typeof
+const enum EDirection {
+  Up = 3,
+  Down,
+  Left,
+  Right,
+}
+console.log("EDirection.Left: ", EDirection.Left);
+
+const ODirection = {
+  Up: 100,
+  Down: 101,
+  Left: 102,
+  Right: 103,
+} as const;
+console.log("ODirection.Left: ", ODirection.Left);
+
+type key1 = keyof typeof ODirection; // ⭐️ type key1 = "Up" | "Down" | "Left" | "Right"
+type Direction = typeof ODirection[key1]; // ⭐️ type Direction = 100 | 101 | 102 | 103
+
+const obj1 = { a: 1, b: 2, c: 3 } as const;
+type key = keyof typeof obj1; // obj1 객체의 key들만 타입으로 뽑아내고 싶을때
+// == type key = "a" | "b" | "c"
+
+function run(dir: Direction) {
+  console.log("### run > dir: ", dir);
+}
 // console.log("tttt");

@@ -52,4 +52,17 @@ var tuple = ["1", 1];
 // tuple[2] = "hello"; // ts가 이건 막음
 tuple.push("hello"); // ts가 이건 못 막음
 console.log("tuple: ", tuple);
+console.log("EDirection.Left: ", 5 /* EDirection.Left */);
+var ODirection = {
+    Up: 100,
+    Down: 101,
+    Left: 102,
+    Right: 103
+};
+console.log("ODirection.Left: ", ODirection.Left);
+var obj1 = { a: 1, b: 2, c: 3 };
+// == type key = "a" | "b" | "c"
+function run(dir) {
+    console.log("### run > dir: ", dir);
+}
 // console.log("tttt");

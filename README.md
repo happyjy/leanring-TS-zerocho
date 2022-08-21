@@ -197,6 +197,37 @@ tuple.push("hello"); // ts가 이건 못 막음
 
 - enum, keyof, typeof
 
+  - enum을 js로 컴파일 했을때
+    - js로 변환했을때 코드로 남지 안는다.
+    - 객체(아래 코드에서 ODirection)는 js 코드로 변환된다.
+    - 웬만해서는 js파일로 코드를 남기는게 좋다고한다. 즉 객체를 적극 활용하자.
+  - 객체에서 as const 의미
+
+    - 선언된 값으로 type을 고정시키겠다는 의미
+    - ODirection객체에 as const 가없으면 아래와 같은 타입으로 추론한다.
+
+    ```
+      const ODirection: {
+          Up: number;
+          Down: number;
+          Left: number;
+          Right: number;
+      }
+    ```
+
+    - as const 있는 경우 타입
+
+    ```
+      const ODirection: {
+        readonly Up: 100;
+        readonly Down: 101;
+        readonly Left: 102;
+        readonly Right: 103;
+      }
+    ```
+
+  - enum 쓰기 싫어서 object썻더니 Object를 활용할때 "keyof typeof"를 사용해야 해야해서 복잡하게 됐지만 "keyof typeof"를 알게 되지 별거 아니게 됨.
+
 ```typescript
 const enum EDirection {
   Up,
@@ -204,31 +235,34 @@ const enum EDirection {
   Left,
   Right,
 }
-
-const ODirection = {
-  Up: 0,
-  Down: 1,
-  Left: 2,
-  Right: 3,
-} as const;
-
 EDirection.Up;
-
 (enum member) EDirection.Up = 0
 
+const ODirection = {
+  Up: 100,
+  Down: 101,
+  Left: 102,
+  Right: 103,
+} as const;
 ODirection.Up;
-
 (property) Up: 0
 
 // Using the enum as a parameter
 function walk(dir: EDirection) {}
 
 // It requires an extra line to pull out the keys
-type Direction = typeof ODirection[keyof typeof ODirection];
+type key1 = keyof typeof ODirection; // ⭐️ type key1 = "Up" | "Down" | "Left" | "Right"
+type Direction = typeof ODirection[keyof typeof ODirection]; // ⭐️ type Direction = 100 | 101 | 102 | 103
 function run(dir: Direction) {}
 
 walk(EDirection.Left);
 run(ODirection.Right);
+
+
+// keyof typeof 에 대해서
+const obj1 = { a: 1, b: 2, c: 3 };
+type key = keyof typeof obj1; // obj1 객체의 key들만 타입으로 뽑아내고 싶을때
+// == type key = "a" | "b" | "c"
 ```
 
 - 객제 타이핑: type과 interface 구분하기
