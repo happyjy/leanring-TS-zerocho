@@ -127,12 +127,18 @@ x = "hello";
 ```
 
 - any를 최대한 쓰지 않는 것을 목표로 할 것.
-- never, unknown, any 타입 주의하기. any는 최대한 피하고 쓰더라도 나중에 꼭 제대로 타이핑하기.
-  [never 좋은 설명 글](https://ui.toast.com/weekly-pick/ko_20220323)
+
+  - never, unknown, any 타입 주의하기. any는 최대한 피하고 쓰더라도 나중에 꼭 제대로 타이핑하기.
+    [never 좋은 설명 글-toast ui](https://ui.toast.com/weekly-pick/ko_20220323)
+
+  - 빈배열일때 never 타입으로 추론한다.
+    - 아래 `const array = [];` 코드를 TS 가 `const array: never[]`로 해석한다.
+      위 toast ui에 never 좋은 설명 글 확인하기
+    - 그래서 push 할때 에러가 난다.
 
 ```typescript
 try {
-  const array = [];
+  const array = []; // const array: never[]
   array[0];
 } catch (error) {
   error;
@@ -140,6 +146,7 @@ try {
 ```
 
 - 최대한 ! 대신 if를 쓸 것
+  - !: null, undefined를 아님을 보증하는 코드
 
 ```typescript
 const head = document.querySelector("#head")!;
