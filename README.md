@@ -300,8 +300,10 @@ type B = {
   b: string;
 };
 
-const aa: A | B = { a: "hello", b: "world" };
-const bb: A & B = { a: "hello", b: "world" }; // ⭐️ & 모든 속성이 다 있어야 한다.
+const aa1: A | B = { a: "hello", b: "world" };
+const aa2: A | B = { a: "hello" };
+
+const bb1: A & B = { a: "hello", b: "world" }; // ⭐️ &: 모든 속성이 다 있어야 한다.
 const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
 ```
 
@@ -360,6 +362,48 @@ const man2: IHuman1 = { breath: true, breed: true, think: true };
 const man3: Human1 = { breath: true, breed: true, think: true };
 ```
 
+- type, interface 상속
+
+```typescript
+type Animal = { breath: true };
+type Mammal = Animal & { breed: true };
+type Human = Mammal & { think: true };
+```
+
+const man: Human = { breath: true, breed: true, think: true };
+
+- ⭐️ type은 이와 같이 사용할 곳에서 사용할 수 있다. 하지만 interface는 불가능
+
+```typescript
+const man1: Animal & { breed: true; think: true } = {
+  breath: true,
+  breed: true,
+  think: true,
+};
+
+interface IAnimal {
+  breath: true;
+}
+interface IMammal extends IAnimal {
+  breed: true;
+}
+interface IHuman extends IMammal {
+  think: true;
+}
+```
+
+- ⭐️ interface, type을 섞어서 사용 가능
+
+```typescript
+interface IHuman1 extends Mammal {
+  think: true;
+}
+type Human1 = IMammal & { think: true };
+
+const man2: IHuman1 = { breath: true, breed: true, think: true };
+const man3: Human1 = { breath: true, breed: true, think: true };
+```
+
 - ⭐️ interface는 선언 할때 마다 합쳐 진다.
   - 이런 특성으로 프로젝트나 lib들이 interface로 선언 되어 있다.
   - 확장 할 수 있기 때문에
@@ -382,7 +426,40 @@ const a3: A1 = { talk() {}, eat() {}, shit() {} };
   - Iterface -> IProps, type -> TType, Enum -> EHello 였지만
   - 요즘에는 붙이지 않는 추세라고 함
 
+- 넓은 타입, 좁은 타입
+
 - 객체 리터럴은 잉여 속성 검사가 있음.
+
+```typescript
+type A2 = string | number; // 넓은 타입
+type A3 = string; // 좁은 타입
+type A4 = string & number; //
+
+// - 넓은 타입, 좁은 타입
+type A5 = { name: string }; // 넓은 타입
+type A6 = { age: number }; // 넓은 타입
+
+type A5A6 = A5 | A6; // 넓은 타입
+
+type A7 = { name: string; age: number }; // 좁은 타입(구체적일 수록 좁은타입)
+type A8 = A5 & A6; // A7과 같은 의미
+
+const a5a6: A5A6 = { name: "jyoon" };
+const a5a6_1: A5A6 = { name: "jyoon", age: 34 };
+// const a5a6_2: A5A6 = { name: "jyoon", age: 34 };
+
+const a7: A8 = { name: "jyoon", age: 34 }; // ⭐️ intersection을 사용하면 모든 타입이 선언해야 한다.
+// const a7_1: A8 = { name: "jyoon" }; //  error: Property 'age' is missing in type
+
+// - 넓은 타입, 좁은 타입을 서로 할당 할 때
+// const a7_2: A8 = a5a6_1; // ⭐️ 넓은 타입(a5a6_1)을 좁은 타입(a7_2)으로 할당 할때 에러가 난다.
+const a5a6_3: A8 = a7; // ⭐️ 좁은 타입(a7)을 넓은 타입 a5a6_3으로 할당 가능하다
+
+// - 객체 리터럴은 잉여 속성 검사가 있음.
+// const a7_3: A8 = { name: "jyoon", age: 34, married: true }; // ⭐️ 잉여 속성 검사 때문에 married 부분에 에러가 난다. , 하지만 a7_4와 같은 과정을 거치면 잉여 속성 검사를 하지 않아 에러가 나지 않는다.
+const a7_4 = { name: "jyoon", age: 34, married: true };
+const a7_5: A8 = a7_4;
+```
 
 ```typescript
 type A = { hello: string };

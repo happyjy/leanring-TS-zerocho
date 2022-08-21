@@ -100,7 +100,7 @@ function run(dir: Direction) {
   console.log("### run > dir: ", dir);
 }
 
-// -union, intersection;
+// - union, intersection
 type A = {
   a: string;
 };
@@ -112,7 +112,7 @@ const aa1: A | B = { a: "hello", b: "world" };
 const aa2: A | B = { a: "hello" };
 
 const bb1: A & B = { a: "hello", b: "world" };
-const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
+// const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
 
 // - type, interface 상속
 
@@ -159,3 +159,33 @@ interface A1 {
   shit: () => void;
 }
 const a3: A1 = { talk() {}, eat() {}, shit() {} };
+
+// 넓은 타입, 좁은 타입
+type A2 = string | number; // 넓은 타입
+type A3 = string; // 좁은 타입
+type A4 = string & number; //
+
+// 넓은 타입, 좁은 타입
+type A5 = { name: string }; // 넓은 타입
+type A6 = { age: number }; // 넓은 타입
+
+type A5A6 = A5 | A6; // 넓은 타입
+
+type A7 = { name: string; age: number }; // 좁은 타입(구체적일 수록 좁은타입)
+type A8 = A5 & A6; // A7과 같은 의미
+
+const a5a6: A5A6 = { name: "jyoon" };
+const a5a6_1: A5A6 = { name: "jyoon", age: 34 };
+// const a5a6_2: A5A6 = { name: "jyoon", age: 34 };
+
+const a7: A8 = { name: "jyoon", age: 34 }; // ⭐️ intersection을 사용하면 모든 타입이 선언해야 한다.
+// const a7_1: A8 = { name: "jyoon" }; //  error: Property 'age' is missing in type
+
+// 넓은 타입, 좁은 타입을 서로 할당 할 때
+// const a7_2: A8 = a5a6_1; // ⭐️ 넓은 타입(a5a6_1)을 좁은 타입(a7_2)으로 할당 할때 에러가 난다.
+const a5a6_3: A8 = a7; // ⭐️ 좁은 타입(a7)을 넓은 타입 a5a6_3으로 할당 가능하다
+
+// - 객체 리터럴은 잉여 속성 검사가 있음.
+// const a7_3: A8 = { name: "jyoon", age: 34, married: true }; // ⭐️ 잉여 속성 검사 때문에 married 부분에 에러가 난다. , 하지만 a7_4와 같은 과정을 거치면 잉여 속성 검사를 하지 않아 에러가 나지 않는다.
+const a7_4 = { name: "jyoon", age: 34, married: true };
+const a7_5: A8 = a7_4;

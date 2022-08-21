@@ -68,7 +68,6 @@ function run(dir) {
 var aa1 = { a: "hello", b: "world" };
 var aa2 = { a: "hello" };
 var bb1 = { a: "hello", b: "world" };
-var bb2 = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
 var man = { breath: true, breed: true, think: true };
 // - ⭐️ type은 이와 같이 사용할 곳에서 사용할 수 있다. 하지만 interface는 불가능
 var man1 = {
@@ -79,3 +78,15 @@ var man1 = {
 var man2 = { breath: true, breed: true, think: true };
 var man3 = { breath: true, breed: true, think: true };
 var a3 = { talk: function () { }, eat: function () { }, shit: function () { } };
+var a5a6 = { name: "jyoon" };
+var a5a6_1 = { name: "jyoon", age: 34 };
+// const a5a6_2: A5A6 = { name: "jyoon", age: 34 };
+var a7 = { name: "jyoon", age: 34 }; // ⭐️ intersection을 사용하면 모든 타입이 선언해야 한다.
+// const a7_1: A8 = { name: "jyoon" }; //  error: Property 'age' is missing in type
+// 넓은 타입, 좁은 타입을 서로 할당 할 때
+// const a7_2: A8 = a5a6_1; // ⭐️ 넓은 타입(a5a6_1)을 좁은 타입(a7_2)으로 할당 할때 에러가 난다.
+var a5a6_3 = a7; // ⭐️ 좁은 타입(a7)을 넓은 타입 a5a6_3으로 할당 가능하다
+// - 객체 리터럴은 잉여 속성 검사가 있음.
+// const a7_3: A8 = { name: "jyoon", age: 34, married: true }; // ⭐️ 잉여 속성 검사 때문에 married 부분에 에러가 난다. , 하지만 a7_4와 같은 과정을 거치면 잉여 속성 검사를 하지 않아 에러가 나지 않는다.
+var a7_4 = { name: "jyoon", age: 34, married: true };
+var a7_5 = a7_4;
