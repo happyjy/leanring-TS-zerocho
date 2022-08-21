@@ -113,3 +113,49 @@ const aa2: A | B = { a: "hello" };
 
 const bb1: A & B = { a: "hello", b: "world" };
 const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
+
+// - type, interface 상속
+
+type Animal = { breath: true };
+type Mammal = Animal & { breed: true };
+type Human = Mammal & { think: true };
+
+const man: Human = { breath: true, breed: true, think: true };
+
+// - ⭐️ type은 이와 같이 사용할 곳에서 사용할 수 있다. 하지만 interface는 불가능
+const man1: Animal & { breed: true; think: true } = {
+  breath: true,
+  breed: true,
+  think: true,
+};
+
+interface IAnimal {
+  breath: true;
+}
+interface IMammal extends IAnimal {
+  breed: true;
+}
+interface IHuman extends IMammal {
+  think: true;
+}
+
+// - ⭐️ interface, type을 섞어서 사용 가능
+interface IHuman1 extends Mammal {
+  think: true;
+}
+type Human1 = IMammal & { think: true };
+
+const man2: IHuman1 = { breath: true, breed: true, think: true };
+const man3: Human1 = { breath: true, breed: true, think: true };
+
+// - ⭐️ interface는 선언 할때 마다 합쳐 진다.
+interface A1 {
+  talk: () => void;
+}
+interface A1 {
+  eat: () => void;
+}
+interface A1 {
+  shit: () => void;
+}
+const a3: A1 = { talk() {}, eat() {}, shit() {} };

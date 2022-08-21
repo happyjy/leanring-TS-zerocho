@@ -321,6 +321,67 @@ type B = { b: string };
 const obj2: B = { a: "hello", b: "world" };
 ```
 
+- type, interface 상속
+
+```typescript
+type Animal = { breath: true };
+type Mammal = Animal & { breed: true };
+type Human = Mammal & { think: true };
+
+const man: Human = { breath: true, breed: true, think: true };
+
+- ⭐️ type은 이와 같이 사용할 곳에서 사용할 수 있다. 하지만 interface는 불가능
+const man1: Animal & { breed: true; think: true } = {
+  breath: true,
+  breed: true,
+  think: true,
+};
+
+interface IAnimal {
+  breadth: true;
+}
+interface IMammal extends IAnimal {
+  breed: true;
+}
+interface IHuman extends IMammal {
+  think: true;
+}
+```
+
+- ⭐️ interface, type을 섞어서 상속 가능
+
+```typescript
+interface IHuman1 extends Mammal {
+  think: true;
+}
+type Human1 = IMammal & { think: true };
+
+const man2: IHuman1 = { breath: true, breed: true, think: true };
+const man3: Human1 = { breath: true, breed: true, think: true };
+```
+
+- ⭐️ interface는 선언 할때 마다 합쳐 진다.
+  - 이런 특성으로 프로젝트나 lib들이 interface로 선언 되어 있다.
+  - 확장 할 수 있기 때문에
+
+```typescript
+interface A1 {
+  talk: () => void;
+}
+interface A1 {
+  eat: () => void;
+}
+interface A1 {
+  shit: () => void;
+}
+const a3: A1 = { talk() {}, eat() {}, shit() {} };
+```
+
+- interface, type, enum 네이밍 조건
+
+  - Iterface -> IProps, type -> TType, Enum -> EHello 였지만
+  - 요즘에는 붙이지 않는 추세라고 함
+
 - 객체 리터럴은 잉여 속성 검사가 있음.
 
 ```typescript

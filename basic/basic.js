@@ -69,3 +69,13 @@ var aa1 = { a: "hello", b: "world" };
 var aa2 = { a: "hello" };
 var bb1 = { a: "hello", b: "world" };
 var bb2 = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
+var man = { breath: true, breed: true, think: true };
+// - ⭐️ type은 이와 같이 사용할 곳에서 사용할 수 있다. 하지만 interface는 불가능
+var man1 = {
+    breath: true,
+    breed: true,
+    think: true
+};
+var man2 = { breath: true, breed: true, think: true };
+var man3 = { breath: true, breed: true, think: true };
+var a3 = { talk: function () { }, eat: function () { }, shit: function () { } };
