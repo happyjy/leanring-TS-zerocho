@@ -145,7 +145,7 @@ try {
 }
 ```
 
-- 최대한 ! 대신 if를 쓸 것
+- 최대 한 ! 대신 if를 쓸 것
   - !: null, undefined를 아님을 보증하는 코드
 
 ```typescript
@@ -162,7 +162,7 @@ if (head) {
 
 ```typescript
 const a: string = "hello";
-const b: String = "hell";
+const b: String = "hell"; // String -> new String()
 ```
 
 - 템플릿 리터럴 타입이 존재(유니언 등 사용 가능)
@@ -172,6 +172,8 @@ type World = "world" | "hell";
 
 // type Greeting = "hello world"
 type Greeting = `hello ${World}`;
+
+// const c: Greating = 입력 후 trigger suggest 하면 "hello hell", "hello world" 두개가 추천 된다.
 ```
 
 - 배열, 튜플 문법
@@ -179,11 +181,18 @@ type Greeting = `hello ${World}`;
 ```typescript
 let arr: string[] = [];
 let arr2: Array<string> = [];
-function rest(...args: string[]) {}
 
+//
+function rest(...args: string[]) {}
+function rest1(a, ...args: string[]) {
+  console.log(a, args); // 1 [ '2', '3' ]
+}
+rest1("1", "2", "3");
+
+//
 const tuple: [string, number] = ["1", 1];
-tuple[2] = "hello";
-tuple.push("hello");
+tuple[2] = "hello"; // ts가 이건 막음
+tuple.push("hello"); // ts가 이건 못 막음
 ```
 
 - enum, keyof, typeof
