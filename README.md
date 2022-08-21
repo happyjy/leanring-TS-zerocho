@@ -469,11 +469,41 @@ const b = { hello: "world", why: "error" };
 const c: A = b;
 ```
 
+- 3곳에서 사용할 수 있는 void
+
+  - void_1. 함수 void  
+    void_2. 매개변수 callback function void  
+    void_3. 메서드로 선언할때 void
+
+  - void1, void2: ⭐️ error를 발생하지 않는다.
+
+    - 이유는 return을 사용하지 않겠다 라는 의미
+
+  - void3: ⭐️ error 발생.
+    - return 값이 없어야 한다.
+
+```typescript
+function a5(callback: () => void /* void_2 */): void /* void_1 */ {
+  // return 2; // error, bcz void_1
+}
+
+a5(() => 2 /* void_2 */);
+interface Human2 {
+  talk: () => void /* void_3 */;
+}
+
+const human: Human2 = {
+  talk() {
+    return "abc";
+  },
+};
+```
+
 - void 타입은 return값을 사용하지 안 겠다는 뜻(메서드나 매개변수에서는 리턴값 사용 가능, but 조심해야 함)
 
 ```typescript
-declare function forEach<T>(arr: T[], callback: (el: T) => undefined): void;
-// declare function forEach<T>(arr: T[], callback: (el: T) => void): void;
+// declare function forEach<T>(arr: T[], callback: (el: T) => undefined): void; // error: bcz of callback함수읭 return 값이 undefined이다. 하지만 target.push의 반환값은 int값이다.
+declare function forEach<T>(arr: T[], callback: (el: T) => void): void;
 let target: number[] = [];
 forEach([1, 2, 3], (el) => target.push(el));
 
