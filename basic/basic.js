@@ -16,3 +16,5 @@ var arr3 = [123, 456]; // 제네릭 표현 방법
 var arr4 = [123, 456, "aaa"];
 //---
 var obj = { lat: 37.5, lon: 127.5 };
+// let aa = 123;
+// aa = "hi" as unknown as number;

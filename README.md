@@ -88,7 +88,9 @@ function add(x: number, y: number) {
 }
 ```
 
-- : 뒷부분, as 뒷부분, <> 부분, interface, type, function 일부를 제외하면 자바스크립트와 동일. 제외하고 생각하는 연습을 초반에 해야 함.
+- ":"뒷부분, as뒷부분, <>부분, interface, type, function 일부를 제외하면 자바스크립트와 동일.
+  - 제외하고 생각하는 연습을 초반에 해야 함.
+  - <>: generic
 
 ```typescript
 const obj: { lat: number; lon: number } = { lat: 37.5, lon: 127.5 };
@@ -106,6 +108,15 @@ function add(x, y) {
 
 interface A {}
 type A = {};
+```
+
+- 아래와 같이 선언적 함수인데 타입만 되어 있고, 선언된 함수가 동시에 올 수도 있다.
+
+```typescript
+function add(x: number, y: number): number;
+function add(x, y) {
+  return x + y;
+}
 ```
 
 - 자바스크립트에 비해서 자유도가 확 줄어듦(ex: 변수에 문자열을 넣었다가 숫자로 바꾸는 등의 행동 어려워짐)

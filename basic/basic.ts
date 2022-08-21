@@ -29,3 +29,6 @@ const arr4: [number, number, string] = [123, 456, "aaa"];
 
 //---
 const obj: { lat: number; lon: number } = { lat: 37.5, lon: 127.5 };
+
+// let aa = 123;
+// aa = "hi" as unknown as number;
