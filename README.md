@@ -278,6 +278,12 @@ const b: B = { a: "hello" };
 ```
 
 - union, intersection
+  - type
+    - 간단한 타입들은 type으로
+  - interface
+    - 객체지향 개념이 포함 됨
+  - intersection(&)
+    - 모든 속성이 다 있어야 한다.
 
 ```typescript
 function add(x: string | number, y: string | number): string | number {
@@ -295,7 +301,8 @@ type B = {
 };
 
 const aa: A | B = { a: "hello", b: "world" };
-const bb: A & B = { a: "hello", b: "world" };
+const bb: A & B = { a: "hello", b: "world" }; // ⭐️ & 모든 속성이 다 있어야 한다.
+const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
 ```
 
 - interface끼리는 서로 합쳐짐.

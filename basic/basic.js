@@ -65,4 +65,7 @@ var obj1 = { a: 1, b: 2, c: 3 };
 function run(dir) {
     console.log("### run > dir: ", dir);
 }
-// console.log("tttt");
+var aa1 = { a: "hello", b: "world" };
+var aa2 = { a: "hello" };
+var bb1 = { a: "hello", b: "world" };
+var bb2 = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.

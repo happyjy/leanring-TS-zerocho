@@ -99,4 +99,17 @@ type key = keyof typeof obj1; // obj1 객체의 key들만 타입으로 뽑아내
 function run(dir: Direction) {
   console.log("### run > dir: ", dir);
 }
-// console.log("tttt");
+
+// -union, intersection;
+type A = {
+  a: string;
+};
+type B = {
+  b: string;
+};
+
+const aa1: A | B = { a: "hello", b: "world" };
+const aa2: A | B = { a: "hello" };
+
+const bb1: A & B = { a: "hello", b: "world" };
+const bb2: A & B = { a: "hello" }; // ⭐️ & 연산자로 A, B 두 타입을 엮었기 때문에 a, b 변수가 모두 있어야 한다.
