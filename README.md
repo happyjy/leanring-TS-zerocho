@@ -528,7 +528,12 @@ declare class A {}
 ```
 
 - 타입간 대입 가능 표
-  ![image](https://user-images.githubusercontent.com/10962668/179646513-3c3be896-3bbc-4784-848b-06bc47e8b129.png)
+
+  - any: 타입 선언을 포기
+  - unknown: 타입을 직접 선언해줘야 한다.
+  - 자세히 보면 5개 녹색 부분은 strict 일때 false(x)이다.
+
+    ![image](https://user-images.githubusercontent.com/10962668/179646513-3c3be896-3bbc-4784-848b-06bc47e8b129.png)
 
 - 타입 가드
 

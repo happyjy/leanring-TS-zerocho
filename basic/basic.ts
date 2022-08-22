@@ -242,3 +242,10 @@ console.log("talkRst: ", talkRst);
 let target: number[] = [];
 // forEach([1, 2, 3], (el) => target.push(el));
 // [1, 2, 3].forEach((el) => target.push(el));
+
+// -
+
+try {
+} catch (error) {
+  error; // type: unknown
+}
