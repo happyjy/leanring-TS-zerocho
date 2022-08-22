@@ -137,3 +137,62 @@ try {
 catch (error) {
     error; // type: unknown
 }
+// - 타입 가드
+var A9 = /** @class */ (function () {
+    function A9() {
+    }
+    A9.prototype.aaa = function () { };
+    return A9;
+}());
+var B3 = /** @class */ (function () {
+    function B3() {
+    }
+    B3.prototype.bbb = function () { };
+    return B3;
+}());
+function aOrB(param) {
+    if (param instanceof A9) {
+        param.aaa();
+    }
+}
+aOrB(new A9());
+aOrB(new B3());
+function typeCheck(a) {
+    if (a.type === "b") {
+        a.bbb;
+    }
+    else if (a.type === "c") {
+        a.ccc;
+    }
+    else {
+        a.ddd;
+    }
+    if ("bbb" in a) {
+        a.type;
+    }
+    else if ("ccc" in a) {
+        a.ccc;
+    }
+    else {
+        a.ddd;
+    }
+}
+// interface Cat {
+//   meow: number;
+// }
+// interface Dog {
+//   bow: number;
+// }
+// function catOrDog(a: Cat | Dog): a is Dog {
+//   if ((a as Cat).meow) {
+//     return false;
+//   }
+//   return true;
+// }
+// const cat: Cat | Dog = { meow: 3 };
+// if (catOrDog(cat)) {
+//   console.log("cat.meow 1: ", cat.meow);
+// }
+// if ("meow" in cat) {
+//   console.log("cat.meow 2: ", cat.meow);
+// }
