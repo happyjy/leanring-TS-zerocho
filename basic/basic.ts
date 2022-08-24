@@ -290,23 +290,62 @@ function typeCheck(a: A10) {
   }
 }
 
-// interface Cat {
-//   meow: number;
-// }
-// interface Dog {
-//   bow: number;
-// }
-// function catOrDog(a: Cat | Dog): a is Dog {
-//   if ((a as Cat).meow) {
-//     return false;
-//   }
-//   return true;
+// - 커스텀 타입 가드(is, 형식 조건자)
+
+interface Cat {
+  meow: number;
+}
+interface Dog {
+  bow: number;
+}
+function catOrDog(
+  a: Cat | Dog
+): a is Dog /* ⭐️ 이게 있어야 조건문에서 분기가 가능하다. */ {
+  if ((a as Cat).meow) {
+    return false;
+  }
+  return true;
+}
+
+function pet(pet: Cat | Dog) {
+  if (catOrDog(pet)) {
+    console.log("pet > dog: ", pet.bow);
+  }
+  if ("meow" in pet) {
+    console.log("pet > cat: ", pet.meow);
+  }
+}
+
+const cat: Cat | Dog = { meow: 3 };
+pet(cat);
+
+// const isRejected = (
+//   input: PromiseSettledResult<unknown>
+// ): input is PromiseRejectedResult /*⭐️ */ => {
+//   return input.status === "rejected";
+// };
+
+// const isFulfilled = <T>(
+//   input: PromiseSettledResult<T>
+// ): input is PromiseFulfilledResult<T> /*⭐️ */ => {
+//   return input.status === "fulfilled";
+// };
+
+// {
+//   /*
+
+// Promise -> Pending -> Settled(Resolved, Rejected)
+// promise.then().catch()
+//         -------------- -> Settled
+//         ------ -> Resolved
+//                ------- -> Rejected
+
+// */
 // }
 
-// const cat: Cat | Dog = { meow: 3 };
-// if (catOrDog(cat)) {
-//   console.log("cat.meow 1: ", cat.meow);
-// }
-// if ("meow" in cat) {
-//   console.log("cat.meow 2: ", cat.meow);
-// }
+// const promises = await Promise.allSettled([
+//   Promise.resolve("a"),
+//   Promise.resolve("b"),
+// ]);
+// const errors = promises.filter((promise) => promise.status === "rejected");
+// const errors = promises.filter(isRejected);

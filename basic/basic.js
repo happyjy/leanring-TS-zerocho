@@ -177,22 +177,44 @@ function typeCheck(a) {
         a.ddd;
     }
 }
-// interface Cat {
-//   meow: number;
+function catOrDog(a) {
+    if (a.meow) {
+        return false;
+    }
+    return true;
+}
+function pet(pet) {
+    if (catOrDog(pet)) {
+        console.log("pet > dog: ", pet.bow);
+    }
+    if ("meow" in pet) {
+        console.log("pet > cat: ", pet.meow);
+    }
+}
+var cat = { meow: 3 };
+pet(cat);
+// const isRejected = (
+//   input: PromiseSettledResult<unknown>
+// ): input is PromiseRejectedResult /*⭐️ */ => {
+//   return input.status === "rejected";
+// };
+// const isFulfilled = <T>(
+//   input: PromiseSettledResult<T>
+// ): input is PromiseFulfilledResult<T> /*⭐️ */ => {
+//   return input.status === "fulfilled";
+// };
+// {
+//   /*
+// Promise -> Pending -> Settled(Resolved, Rejected)
+// promise.then().catch()
+//         -------------- -> Settled
+//         ------ -> Resolved
+//                ------- -> Rejected
+// */
 // }
-// interface Dog {
-//   bow: number;
-// }
-// function catOrDog(a: Cat | Dog): a is Dog {
-//   if ((a as Cat).meow) {
-//     return false;
-//   }
-//   return true;
-// }
-// const cat: Cat | Dog = { meow: 3 };
-// if (catOrDog(cat)) {
-//   console.log("cat.meow 1: ", cat.meow);
-// }
-// if ("meow" in cat) {
-//   console.log("cat.meow 2: ", cat.meow);
-// }
+// const promises = await Promise.allSettled([
+//   Promise.resolve("a"),
+//   Promise.resolve("b"),
+// ]);
+// const errors = promises.filter((promise) => promise.status === "rejected");
+// const errors = promises.filter(isRejected);
