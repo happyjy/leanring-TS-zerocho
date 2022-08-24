@@ -193,28 +193,15 @@ function pet(pet) {
 }
 var cat = { meow: 3 };
 pet(cat);
-// const isRejected = (
-//   input: PromiseSettledResult<unknown>
-// ): input is PromiseRejectedResult /*⭐️ */ => {
-//   return input.status === "rejected";
-// };
-// const isFulfilled = <T>(
-//   input: PromiseSettledResult<T>
-// ): input is PromiseFulfilledResult<T> /*⭐️ */ => {
-//   return input.status === "fulfilled";
-// };
-// {
-//   /*
-// Promise -> Pending -> Settled(Resolved, Rejected)
-// promise.then().catch()
-//         -------------- -> Settled
-//         ------ -> Resolved
-//                ------- -> Rejected
-// */
-// }
-// const promises = await Promise.allSettled([
-//   Promise.resolve("a"),
-//   Promise.resolve("b"),
-// ]);
-// const errors = promises.filter((promise) => promise.status === "rejected");
-// const errors = promises.filter(isRejected);
+var a8 = { a: "hi", b: "hello", c: "jyoon", d: "world" };
+var a9 = { a: 11, b: 11, c: 11, d: 11 };
+var a10 = {
+    Human: 11,
+    Mammal: 11,
+    Animal: 11
+};
+var a11 = {
+    Human: "Human",
+    Mammal: "Mammal",
+    Animal: "Animal"
+};

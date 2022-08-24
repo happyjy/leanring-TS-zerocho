@@ -349,3 +349,32 @@ pet(cat);
 // ]);
 // const errors = promises.filter((promise) => promise.status === "rejected");
 // const errors = promises.filter(isRejected);
+
+// - readonly, 인덱스드 시그니처, 맵드 타입스
+
+//인덱스드 시그니처
+// type A11 = { a: string; b: string; c: string; d: string };
+type A11 = { [key: string]: string };
+type A12 = { [key: string]: number };
+const a8: A11 = { a: "hi", b: "hello", c: "jyoon", d: "world" };
+const a9: A12 = { a: 11, b: 11, c: 11, d: 11 };
+
+// 맵드 타입스
+type A13 = "Human" | "Mammal" | "Animal";
+type A14 = { [key in A13]: number };
+const a10: A14 = {
+  Human: 11,
+  Mammal: 11,
+  Animal: 11,
+};
+
+type A15 = { [key in A13]: A13 };
+const a11: A15 = {
+  Human: "Human",
+  Mammal: "Mammal",
+  Animal: "Animal",
+};
+
+// interface로는 아래 처럼 |(intersection), &로 표현하지 못한다.
+type A16 = "Human" | "Mammal" | "Animal";
+type A17 = "Human" & "Mammal" & "Animal";
