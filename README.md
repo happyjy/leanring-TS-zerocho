@@ -657,15 +657,31 @@ const promises = await Promise.allSettled([
 const errors = promises.filter(isRejected);
 ```
 
-class인 경우 instanceof 연산자도 가능!
+- readonly, 인덱스드 시그니처, 맵드 타입스
 
-- readonly
+  - class인 경우 instanceof 연산자도 가능!
+
+  - readonly
 
 ```typescript
 interface A {
   readonly a: string;
   b: string;
 }
+```
+
+```typescript
+// type A = { a: string; b: string; c: string; d: string };
+type A = { [key: string]: string };
+const aaa: A = { a: "hi", b: "hello", c: "jyoon", d: "world" };
+```
+
+```typescript
+
+```
+
+```typescript
+
 ```
 
 - class에 private, protected 추가됨
