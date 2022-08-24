@@ -536,6 +536,7 @@ declare class A {}
     ![image](https://user-images.githubusercontent.com/10962668/179646513-3c3be896-3bbc-4784-848b-06bc47e8b129.png)
 
 - 타입 가드
+  - unkonwn, 남이만든 타임이 틀릴때 as를 웬만해서는 쓰지 않는다.
 
 ```typescript
 function numOrStr(a: number | string) {
@@ -554,46 +555,100 @@ function numOrNumArr(a: number | number[]) {
   }
 }
 
+// instanceof
+class A9 {
+  aaa() {}
+}
+class B3 {
+  bbb() {}
+}
+function aOrB(param: A9 | B3) {
+  if (param instanceof A9) {
+    param.aaa();
+  }
+}
+aOrB(new A9());
+aOrB(new B3());
+
+// 2가지 방법
+//   1. type property,
+//   2. in연산자로 객체 안 프로퍼티 구분
 type B = { type: "b"; bbb: string };
 type C = { type: "c"; ccc: string };
 type D = { type: "d"; ddd: string };
 type A = B | C | D;
 function typeCheck(a: A) {
-  if (a.type === "b") {
-    a.bbb;
-  } else if (a.type === "c") {
-    a.ccc;
+  // if (a.type === "b") {
+  //   a.bbb;
+  // } else if (a.type === "c") {
+  //   a.ccc;
+  // } else {
+  //   a.ddd;
+  // }
+  if ("bbb" in a) {
+    a.type;
+  } else if ("ccc" in a) {
+    a.ddd;
   } else {
     a.ddd;
   }
 }
+```
 
+- 커스텀 타입 가드(is, 형식 조건자)
+  - typeof, instanceof, in, Array.isArray로 구분할 수 있지만
+    - 위 4가지 키워드로 구분 할 수 없을 정도로 복잡할 때 사용한다.
+  - 그리고 is가 아니면 타입 추론이 안 되는 경우도 있습니다.
+
+```typescript
 interface Cat {
   meow: number;
 }
 interface Dog {
   bow: number;
 }
-function catOrDog(a: Cat | Dog): a is Dog {
+function catOrDog(
+  a: Cat | Dog
+): a is Dog /* ⭐️ 이게 있어야 조건문에서 분기가 가능하다. */ {
+  // 타입 판별을 직접 만들 수 있다.
   if ((a as Cat).meow) {
     return false;
   }
   return true;
 }
-const cat: Cat | Dog = { meow: 3 };
-if (catOrDog(cat)) {
-  console.log(cat.meow);
-}
-if ("meow" in cat) {
-  console.log(cat.meow);
+
+// 타입을 구분해주는 커스텀 함수를 직접 만들 수 있다.
+function pet(pet: Cat | Dog) {
+  if (catOrDog(pet)) {
+    console.log("pet > dog: ", pet.bow);
+  }
+  if ("meow" in pet) {
+    console.log("pet > cat: ", pet.meow);
+  }
 }
 
+const cat: Cat | Dog = { meow: 3 };
+pet(cat);
+```
+
+- 커스텀 타입 가드(is, 형식 조건자)
+  - 타입을 더 정확하게 해줄 수 있따.
+  - point
+    - input is PromiseRejectedResult
+    - input is PromiseFulfilledResult<T>
+
+```typescript
 const isRejected = (
   input: PromiseSettledResult<unknown>
-): input is PromiseRejectedResult => input.status === "rejected";
+): input is PromiseRejectedResult /*⭐️ */ => {
+  return input.status === "rejected";
+};
+
 const isFulfilled = <T>(
   input: PromiseSettledResult<T>
-): input is PromiseFulfilledResult<T> => input.status === "fulfilled";
+): input is PromiseFulfilledResult<T> /*⭐️ */ => {
+  return input.status === "fulfilled";
+};
 
 const promises = await Promise.allSettled([
   Promise.resolve("a"),
