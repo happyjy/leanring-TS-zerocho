@@ -699,6 +699,8 @@ const errors = promises.filter(isRejected);
   - 맵드 타입스
   - interface로는 아래 처럼 |(intersection), &로 표현하지 못한다.
 
+  - readonly
+
 ```typescript
 // readonly
 interface A {
@@ -772,6 +774,20 @@ class A20 {
 
   method() {}
 }
+```
+
+```typescript
+// type A = { a: string; b: string; c: string; d: string };
+type A = { [key: string]: string };
+const aaa: A = { a: "hi", b: "hello", c: "jyoon", d: "world" };
+```
+
+```typescript
+
+```
+
+```typescript
+
 ```
 
 - class에 private, protected 추가됨
