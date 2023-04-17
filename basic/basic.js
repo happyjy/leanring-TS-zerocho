@@ -1,3 +1,25 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _A20_b;
 var a = 5;
 function add(x, y) {
     return x + y;
@@ -205,3 +227,64 @@ var a11 = {
     Mammal: "Mammal",
     Animal: "Animal"
 };
+// - class 기초
+var A18 = /** @class */ (function () {
+    /* ⭐️ 기본값이 있을때 는 ? 연산자를 쓰지못한다. */
+    function A18(a, b, c) {
+        if (b === void 0) { b = 123; }
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+    A18.prototype.method = function () { };
+    return A18;
+}());
+new A18("1234");
+var a12 = new A18("1234"); // 클래스 이름은(A19) 인스턴스를 가르킨다.
+var a13 = A18; // typeof A19: class 자체
+// const a13: typeof A18 = new A18("1234"); // error
+// typescript의 private을 사용하는것이 더 좋다고함
+//  (하지만 js로 변환시 public으로 변한다고 한다. 하지만, ts에서 작업할때는 접근이 불가능해 컴파일이 안된다. 즉 사용해도 된다. )
+// 이유는 typescript는 protected도 제공해주지만 js에서는 제공하지 않음.
+var A20 = /** @class */ (function () {
+    function A20(a, b) {
+        if (b === void 0) { b = 123; }
+        _A20_b.set(this, void 0);
+        this.a = a;
+        __classPrivateFieldSet(this, _A20_b, b, "f");
+    }
+    A20.prototype.method = function () { };
+    return A20;
+}());
+_A20_b = new WeakMap();
+var B6 = /** @class */ (function () {
+    function B6() {
+        this.a = "12341";
+        this.b = "1234";
+        this.c = "wow";
+        this.d = "wow";
+    }
+    B6.prototype.method = function () {
+        console.log(this.a);
+        console.log(this.b);
+        console.log(this.c);
+        console.log(this.d);
+    };
+    return B6;
+}());
+var C2 = /** @class */ (function (_super) {
+    __extends(C2, _super);
+    function C2() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    C2.prototype.method = function () {
+        // console.log(this.a); // a 접근 제한 됨
+        console.log(this.b);
+        console.log(this.c);
+        console.log(this.d);
+    };
+    return C2;
+}(B6));
+// console.log("new C2().a: ", new C2().a);
+// console.log("new C2().b: ", new C2().b);
+console.log("new C2().c: ", new C2().c);

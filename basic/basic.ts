@@ -378,3 +378,76 @@ const a11: A15 = {
 // interface로는 아래 처럼 |(intersection), &로 표현하지 못한다.
 type A16 = "Human" | "Mammal" | "Animal";
 type A17 = "Human" & "Mammal" & "Animal";
+
+// - class 기초
+
+class A18 {
+  a: string;
+  b: number;
+  c?: number;
+
+  /* ⭐️ 기본값이 있을때 는 ? 연산자를 쓰지못한다. */
+  constructor(a: string, b: number = 123, c?: number) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+  }
+
+  method() {}
+}
+
+new A18("1234");
+
+type A19 = A18;
+const a12: A19 = new A18("1234"); // 클래스 이름은(A19) 인스턴스를 가르킨다.
+const a13: typeof A18 = A18; // typeof A19: class 자체
+// const a13: typeof A18 = new A18("1234"); // error
+
+// typescript의 private을 사용하는것이 더 좋다고함
+//  (하지만 js로 변환시 public으로 변한다고 한다. 하지만, ts에서 작업할때는 접근이 불가능해 컴파일이 안된다. 즉 사용해도 된다. )
+// 이유는 typescript는 protected도 제공해주지만 js에서는 제공하지 않음.
+class A20 {
+  private a: string; // private: typescript에서 제공
+  #b: number;
+
+  constructor(a: string, b: number = 123) {
+    this.a = a;
+    this.#b = b;
+  }
+
+  method() {}
+}
+
+// private은 "속한 클래스"에서만 사용 가능
+// protected는 "속한 클래스 + 상속된 클래스"에서 사용 가능
+// public은 "속한 클래스 + 상속된 클래스 + 인스턴스"에서 사용 가능
+interface A21 {
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+}
+class B6 implements A21 {
+  private a: string = "12341";
+  protected b: string = "1234";
+  public c: string = "wow";
+  d: string = "wow";
+
+  method() {
+    console.log(this.a);
+    console.log(this.b);
+    console.log(this.c);
+    console.log(this.d);
+  }
+}
+class C2 extends B6 {
+  method() {
+    // console.log(this.a); // a 접근 제한 됨
+    console.log(this.b);
+    console.log(this.c);
+    console.log(this.d);
+  }
+}
+// console.log("new C2().a: ", new C2().a);
+// console.log("new C2().b: ", new C2().b);
+console.log("new C2().c: ", new C2().c);
