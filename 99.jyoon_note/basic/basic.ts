@@ -90,7 +90,7 @@ const ODirection = {
 console.log("ODirection.Left: ", ODirection.Left);
 
 type key1 = keyof typeof ODirection; // ⭐️ type key1 = "Up" | "Down" | "Left" | "Right"
-type Direction = typeof ODirection[key1]; // ⭐️ type Direction = 100 | 101 | 102 | 103
+type Direction = (typeof ODirection)[key1]; // ⭐️ type Direction = 100 | 101 | 102 | 103
 
 const obj1 = { a: 1, b: 2, c: 3 } as const;
 type key = keyof typeof obj1; // obj1 객체의 key들만 타입으로 뽑아내고 싶을때
@@ -408,11 +408,11 @@ const a13: typeof A18 = A18; // typeof A19: class 자체
 // 이유는 typescript는 protected도 제공해주지만 js에서는 제공하지 않음.
 class A20 {
   private a: string; // private: typescript에서 제공
-  #b: number;
+  // #b: number;
 
   constructor(a: string, b: number = 123) {
     this.a = a;
-    this.#b = b;
+    // this.#b = b;
   }
 
   method() {}
@@ -427,10 +427,11 @@ interface A21 {
   c: string;
   d: string;
 }
+// 아래 private, protexted, public접근제한자 를 사용하면 ts 에러가나오고 있음.
 class B6 implements A21 {
-  private a: string = "12341";
-  protected b: string = "1234";
-  public c: string = "wow";
+  /* private */ a: string = "12341";
+  /* protected */ b: string = "1234";
+  /* public */ c: string = "wow";
   d: string = "wow";
 
   method() {
